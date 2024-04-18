@@ -88,7 +88,7 @@ const BookingProcessOne = ({
         </div>
         {bookingInfo.shoot_type.toLowerCase() === "outdoor" && (
           <div>
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location"> Your Location</label>
             <input
               type="text"
               id="location"
