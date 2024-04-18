@@ -15,24 +15,26 @@ const BookingProcessOne = ({
   profile: profileSchema;
   setProfile: React.Dispatch<React.SetStateAction<profileSchema>>;
 }) => {
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     let value = e.target.value;
-    setBookingInfo({ ...bookingInfo, [name]: value });   
+    setBookingInfo({ ...bookingInfo, [name]: value });
   };
 
   const getUserProfile = async () => {
-    let data = [];
     const accessToken = localStorage.getItem("accessToken");
     console.log("token: " + accessToken);
     if (accessToken) {
-      data = await retrieveProfile(accessToken);
+      const data = await retrieveProfile(accessToken);
       console.log(data);
       if (data) {
         setProfile(data);
       }
     } else {
-      data = await retrieveProfile("string");
+      const data = await retrieveProfile("string"); // Assuming "string" is a placeholder?
+      if (data) {
+        setProfile(data);
+      }
     }
   };
 
@@ -55,14 +57,13 @@ const BookingProcessOne = ({
             name="full_name"
             value={profile.first_name + " " + profile.last_name}
             disabled
-            placeholder="Enter your Full Name"
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
         </div>
         <div>
           <label htmlFor="Phone_number">WhatsApp Number</label>
           <input
-            type="number"
+            type="tel"
             id="Phone_number"
             name="phone"
             value={bookingInfo["phone"]}
@@ -73,26 +74,26 @@ const BookingProcessOne = ({
         </div>
 
         <div>
-          <label htmlFor="password">Date</label>
+          <label htmlFor="date">Date</label>
           <input
             type="date"
             id="date"
             name="shooting_date"
             value={bookingInfo["shooting_date"]}
             onChange={handleChange}
-            placeholder={new Date().getTime.toString()}
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
         </div>
         <div>
-          <label htmlFor="time">Time (between 08:00 and 19:00) </label>
+          <label htmlFor="time">Time (between 08:00 and 19:00)</label>
           <input
             type="time"
             id="time"
             name="shooting_time"
             value={bookingInfo["shooting_time"]}
+            min="08:00"
+            max="19:00"
             onChange={handleChange}
-            placeholder={new Date().getTime.toString()}
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
         </div>
