@@ -16,22 +16,15 @@ const BookingProcessOne = ({
   setProfile: React.Dispatch<React.SetStateAction<profileSchema>>;
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let name = e.target.name;
-    let value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
     setBookingInfo({ ...bookingInfo, [name]: value });
   };
 
   const getUserProfile = async () => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("token: " + accessToken);
     if (accessToken) {
       const data = await retrieveProfile(accessToken);
-      console.log(data);
-      if (data) {
-        setProfile(data);
-      }
-    } else {
-      const data = await retrieveProfile("string"); // Assuming "string" is a placeholder?
       if (data) {
         setProfile(data);
       }
@@ -41,6 +34,15 @@ const BookingProcessOne = ({
   useEffect(() => {
     getUserProfile();
   }, []);
+
+  // Helper function to format the date in yyyy-MM-dd format
+  const formattedTodayDate = () => {
+    const today = new Date();
+    const day = `0${today.getDate()}`.slice(-2);
+    const month = `0${today.getMonth() + 1}`.slice(-2);
+    const year = today.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -55,7 +57,7 @@ const BookingProcessOne = ({
             type="text"
             id="full_name"
             name="full_name"
-            value={profile.first_name + " " + profile.last_name}
+            value={`${profile.first_name} ${profile.last_name}`}
             disabled
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
@@ -63,7 +65,7 @@ const BookingProcessOne = ({
         <div>
           <label htmlFor="Phone_number">WhatsApp Number</label>
           <input
-            type="tel"
+            type="tel" // Changed type from number to tel for better phone number handling
             id="Phone_number"
             name="phone"
             value={bookingInfo["phone"]}
@@ -81,19 +83,20 @@ const BookingProcessOne = ({
             name="shooting_date"
             value={bookingInfo["shooting_date"]}
             onChange={handleChange}
+            min={formattedTodayDate()} // Set minimum date to today's date
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
         </div>
         <div>
-          <label htmlFor="time">Time (between 08:00am and 11:00pm)</label>
+          <label htmlFor="time">Time (between 08:00 and 23:00)</label>
           <input
             type="time"
             id="time"
             name="shooting_time"
             value={bookingInfo["shooting_time"]}
-            min="08:00"
-            max="23:00"
             onChange={handleChange}
+            min="08:00" // Set minimum time to 08:00
+            max="23:00" // Set maximum time to 23:00
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
         </div>
