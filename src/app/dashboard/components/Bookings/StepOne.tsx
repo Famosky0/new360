@@ -85,14 +85,14 @@ const BookingProcessOne = ({
           />
         </div>
         <div>
-          <label htmlFor="time">Time (between 08:00 and 19:00)</label>
+          <label htmlFor="time">Time (between 08:00am and 11:00pm)</label>
           <input
             type="time"
             id="time"
             name="shooting_time"
             value={bookingInfo["shooting_time"]}
             min="08:00"
-            max="19:00"
+            max="23:00"
             onChange={handleChange}
             className="w-full bg-white rounded-md min-h-12 mt-1.5 p-2 text-black"
           />
