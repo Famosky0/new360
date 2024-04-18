@@ -49,7 +49,7 @@ const BookingProcessOne = ({
       <h1 className="text-3xl text-primary">Create Bookings</h1>
       <form className="flex flex-col gap-5 mt-8">
         <div className="flex flex-col gap-1">
-          <label htmlFor="shoot_type">Shoot Type</label>
+          <label htmlFor="shoot_type">ShootType</label>
           <select
             name="shoot_type"
             id="shoot_type"
