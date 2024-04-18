@@ -95,7 +95,7 @@ const BookingProcessOne = ({
               {loading ? (
                 <>
                   <div className="w-full flex items-center gap-[5px]">
-                    <Loader /> <p>Calculate</p>
+                    <Loader /> <p>Calculate Price</p>
                   </div>
                 </>
               ) : (
